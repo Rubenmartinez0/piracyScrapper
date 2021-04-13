@@ -16,7 +16,7 @@ class SearchController extends Controller
     {
         //dd($request->all());
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($grequest->all(), [
             'searchTerm' => ['required','string', 'max:255'],
     
         ]);
