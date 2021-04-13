@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Auth::routes();
 
+Route::get('/', 'App\Http\Controllers\SearchController@index')->name('index');
 Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search');
