@@ -6,9 +6,30 @@
         <div class="col-md-8">
             <form method="POST" action="{{ route('search') }}">
                 @csrf
+                <a class="btn btn-warning" href="/portals"><strong>Portals</strong></a>
                 <div class="form-group">
-                    <label for="name"><strong>Sitios webs:</strong></label>
+                    
                     <div class="d-flex">
+                       @foreach ($portals as $portal)
+                       <div class="form-check mr-3">
+                            <input class="form-check-input" type="checkbox" name="portalsToQuery[]" value={{ $portal->id }} checked>
+                            <label class="form-check-label" for="flexCheckDefault">{{ $portal->name }}</label>
+                        </div>
+
+                        <div class="form-check mr-3">
+                            <input class="form-check-input" type="checkbox" name="portalsToQuery[]" value=1 checked>
+                            <label class="form-check-label" for="flexCheckDefault">Playdede.com</label>
+                        </div>
+
+                        <div class="form-check mr-3">
+                            <input class="form-check-input" type="checkbox" name="portalsToQuery[]" value=3 checked>
+                            <label class="form-check-label" for="flexCheckDefault">Cuevana3.io</label>
+                        </div>
+                       @endforeach               
+
+                    </div>
+
+                    {{-- <div class="d-flex">
                         <div class="form-check mr-3">
                             <input class="form-check-input" type="checkbox" name="web1" value="1" checked>
                             <label class="form-check-label" for="flexCheckDefault">Web 1</label>
@@ -29,51 +50,37 @@
                             <input class="form-check-input" type="checkbox" name="web5" value="1" checked>
                             <label class="form-check-label" for="flexCheckDefault">Web 5</label>
                         </div>                        
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="form-check mr-3">
-                            <input class="form-check-input" type="checkbox" name="web6" value="1" checked>
-                            <label class="form-check-label" for="flexCheckDefault">Web 6</label>
-                        </div>
-                        <div class="form-check mr-3">
-                            <input class="form-check-input" type="checkbox" name="web7" value="1" checked>
-                            <label class="form-check-label" for="flexCheckDefault">Web 7</label>
-                        </div>
-                        <div class="form-check mr-3">
-                            <input class="form-check-input" type="checkbox" name="web8" value="1" checked>
-                            <label class="form-check-label" for="flexCheckDefault">Web 8</label>
-                        </div>
-                        <div class="form-check mr-3">
-                            <input class="form-check-input" type="checkbox" name="web9" value="1" checked>
-                            <label class="form-check-label" for="flexCheckDefault">Web 9</label>
-                        </div>
-                        <div class="form-check mr-3">
-                            <input class="form-check-input" type="checkbox" name="web10" value="1" checked>
-                            <label class="form-check-label" for="flexCheckDefault">Web 10</label>
-                        </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="input-group">
-                    <span class="input-group-btn mr-5 mt-1">
-                        <button class="btn btn-info" type="submit" title="Query">
-                            <span class="fas fa-search text-white">Search</span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control mr-2" name="searchTerm" placeholder="Query">
+
+                    <input required="required" type="text" class="form-control mr-2" name="searchTerm" placeholder="Query">
+                    <button class="btn btn-primary" type="submit" title="Query">Search</button>
                 </div>
             </form>
 
-            @isset($results)
-                <div>
-                    <h4>Search results of "{{ $results->query }}":</h4>
-                    @forelse($results->webs as $result)
-                        <label>Website: {{ $results->webUrl }}<label> <label>Post URL: {{ $results->postUrl }}</label>
-                        <br>
+            @isset($portalsToQuery)
+                <div class="mt-5">
+                    <h4>Search results for "{{ $query }}":</h4>
+                    @forelse($portalsToQuery as $portal)
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <label><strong>{{ $portal->name }}</strong><label>
+                            </div>
+                            <div class="card-body">
+                                <label><strong>Post URL: <strong></label>
+                            </div>
+                        </div>
                     @empty
                         <option>There are no available results</option>       
                     @endforelse
 
+                </div>
+            @endisset
+
+            @isset($message)
+                <div class="mt-5">
+                    <h4>{{ $message }} "{{$query }}".</h4>
                 </div>
             @endisset
 
