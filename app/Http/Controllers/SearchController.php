@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Portal;
+use Goutte\Client;
+
+use HeadlessChromium\BrowserFactory;
 
 class SearchController extends Controller
 {
@@ -39,29 +42,40 @@ class SearchController extends Controller
              $query = $request->searchTerm;
 
             foreach($portalsToQuery as $portal){
-                if($portal->homeUrl == "https://movidy.mobi/"){
-                    $query = trim($query);
-                    $query = str_replace(' ', '%20', $query);
-                    //dd($query); 
-                    $url = "https://movidy.mobi/"."search?query=".$query;
-                    include('simple_html_dom.php');
-                    $html = file_get_html("https://www.w3schools.com/php/default.asp");
-                    
-                    //$list = $html->find('div[class="title"]',0);
-                    //$list = $html->find('figure[class="item ng-star-inserted"]',0);
-                    //$list = $html->find('figcaption a')->plaintext;
 
-                    $list = $html->find('div[class="w3-bar w3-left"]',0);
-                    $resultado = [];
-                    foreach($list->find('a') as $element){
-                        array_push($resultado, $element->title);
-                    }
-                    dd($resultado);
+                if($portal->homeUrl == 'https://movidy.mobi/'){
+                    $query = trim($query);
                     
-                   
+                    $queryaux = str_replace(' ', '%20', $query);
+                    $url = 'https://movidy.mobi/search?query='.$queryaux;
+                    $portal->link = $url;
+                }
+
+                if($portal->homeUrl == 'https://imdb.com/'){
+                    $query = trim($query);
+                    
+                    $queryaux = str_replace(' ', '+', $query);
+                    $url = 'https://imdb.com/find?q='.$queryaux;
+                    $portal->link = $url;
+                }
+
+                if($portal->homeUrl == 'https://eztv.re/'){
+                    $query = trim($query);
+                    
+                    $queryaux = str_replace(' ', '-', $query);
+                    $url = 'https://eztv.re/search/'.$queryaux;
+                    $portal->link = $url;
+                }
+
+                if($portal->homeUrl == 'https://yts.unblockit.club/'){
+                    $query = trim($query);
+                    
+                    $queryaux = str_replace(' ', '%20', $query);
+                    $url = 'https://yts.unblockit.club/browse-movies/shutter%20island/all/all/0/latest/0/all';
+                    $url = str_replace('*query*', $queryaux, $url);
+                    $portal->link = $url;
                 }
             }
-            //dd($portalsToQuery[1]);
         }else{
             return view('index', compact('query'))->with('message', 'Failed to search');
         }
