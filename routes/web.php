@@ -19,3 +19,5 @@ Route::get('/', 'App\Http\Controllers\SearchController@index')->name('index');
 Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 
 Route::get('/portals', 'App\Http\Controllers\PortalController@index')->name('portal.index');
+Route::get('/portal/create', 'App\Http\Controllers\PortalController@createView')->name('portal.createView');
+Route::post('/portal/create', 'App\Http\Controllers\PortalController@store')->name('portal.store');
