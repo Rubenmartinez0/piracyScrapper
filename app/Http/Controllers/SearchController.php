@@ -18,10 +18,9 @@ class SearchController extends Controller
      */
     public function index()
     {
-        $portals = Portal::whereNotNull('searchUrl')->get();
+        $portals = Portal::whereNotNull(['searchUrl', 'spaceSubstitute'])->get();
         return view('index', compact('portals'));
     }
-
 
 
    /**
@@ -31,7 +30,8 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $portals = Portal::whereNotNull('searchUrl')->get();
+        // Get all the portals in database with searchUrl and spaceSubstitute attributes
+        $portals = Portal::whereNotNull(['searchUrl', 'spaceSubstitute'])->get();
         
         $validator = Validator::make($request->all(), [
             'searchTerm' => ['required','string', 'min:1', 'max:255'],
@@ -40,46 +40,17 @@ class SearchController extends Controller
         if ($validator->passes()) {
              $portalsToQuery = Portal::whereIn('id', $request->portalsToQuery)->get();
              $query = $request->searchTerm;
+             $query = trim($query);
 
             foreach($portalsToQuery as $portal){
-
-                if($portal->homeUrl == 'https://movidy.mobi/'){
-                    $query = trim($query);
-                    
-                    $queryaux = str_replace(' ', '%20', $query);
-                    $url = 'https://movidy.mobi/search?query='.$queryaux;
-                    $portal->link = $url;
-                }
-
-                if($portal->homeUrl == 'https://imdb.com/'){
-                    $query = trim($query);
-                    
-                    $queryaux = str_replace(' ', '+', $query);
-                    $url = 'https://imdb.com/find?q='.$queryaux;
-                    $portal->link = $url;
-                }
-
-                if($portal->homeUrl == 'https://eztv.re/'){
-                    $query = trim($query);
-                    
-                    $queryaux = str_replace(' ', '-', $query);
-                    $url = 'https://eztv.re/search/'.$queryaux;
-                    $portal->link = $url;
-                }
-
-                if($portal->homeUrl == 'https://yts.unblockit.club/'){
-                    $query = trim($query);
-                    
-                    $queryaux = str_replace(' ', '%20', $query);
-                    $url = 'https://yts.unblockit.club/browse-movies/shutter%20island/all/all/0/latest/0/all';
-                    $url = str_replace('*query*', $queryaux, $url);
-                    $portal->link = $url;
-                }
+                // Replace the space for the assignted string
+                $queryaux = str_replace(' ', $portal->spaceSubstitute, $query);
+                // Concat both strings and assign it to a new $portal attribute(link)
+                $portal->link = $portal->searchUrl.$queryaux;
             }
         }else{
             return view('index', compact('query'))->with('message', 'Failed to search');
         }
-        //dd($portalsToQuery);
         return view('index', compact('query', 'portals', 'portalsToQuery'));
     }
 }

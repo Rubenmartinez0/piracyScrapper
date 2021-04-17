@@ -18,6 +18,7 @@ class CreatePortalsTable extends Migration
             $table->string('name')->unique();
             $table->string('homeUrl')->unique()->nullable();
             $table->string('searchUrl')->unique()->nullable();
+            $table->string('spaceSubstitute')->nullable();
             $table->timestamps();
         });
     }

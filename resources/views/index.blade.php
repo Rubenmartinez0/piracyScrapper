@@ -30,12 +30,9 @@
 
             @isset($portalsToQuery)
                 <div class="mt-5">
-                    <h4>Search results for "{{ $query }}":</h4>
+                    <h4>Links for "{{ $query }}" search:</h4>
                     @forelse($portalsToQuery as $portal)
                         <div class="card mb-3">
-                            {{-- <div class="card-header">
-                                <label><strong></strong><label>
-                            </div> --}}
                             <div class="card-body">
                                 <label><strong>{{ $portal->name }}: <strong><a target="_blank" href={{ $portal->link }}>{{ $portal->link }}</a></label>
                             </div>

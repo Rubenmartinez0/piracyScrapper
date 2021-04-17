@@ -18,5 +18,6 @@ class Portal extends Model
         'name',
         'homeUrl',
         'searchUrl',
+        'spaceSubstitute',
     ];
 }
