@@ -21,3 +21,6 @@ Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('se
 Route::get('/portals', 'App\Http\Controllers\PortalController@index')->name('portal.index');
 Route::get('/portal/create', 'App\Http\Controllers\PortalController@createView')->name('portal.createView');
 Route::post('/portal/create', 'App\Http\Controllers\PortalController@store')->name('portal.store');
+Route::get('/portal/{portalId}', 'App\Http\Controllers\PortalController@editView')->name('portal.editView');
+Route::patch('/portal/{portalId}', 'App\Http\Controllers\PortalController@update')->name('portal.update');
+Route::delete('/portal/{portalId}', 'App\Http\Controllers\PortalController@delete')->name('portal.delete');
