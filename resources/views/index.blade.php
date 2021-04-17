@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <form method="POST" action="{{ route('search') }}">
                 @csrf
-                <a class="btn btn-warning" href="/portals"><strong>Portals</strong></a>
+                <a class="btn btn-warning" href="/portals"><strong>Manage portals</strong></a>
                 <div class="form-group">
                     
                     <div class="d-flex">

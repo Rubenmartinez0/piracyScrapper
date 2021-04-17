@@ -51,7 +51,7 @@
             </tbody>
         </table>
     
-      <a class="btn btn-primary float-left" href="/index">Back</a>
+      <a class="btn btn-primary float-left" href="/">Back</a>
     <div>
 </div>
 
