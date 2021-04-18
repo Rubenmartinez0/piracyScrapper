@@ -13,9 +13,9 @@
     <form method="POST" action="{{ route('portal.store') }}">
         @csrf
         <div class="form-group">
-            <label for="username"><strong>Name*:</strong></label>
-            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}"/>
-            @error('username')
+            <label for="name"><strong>Name*:</strong></label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"/>
+            @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -23,9 +23,9 @@
         </div>
 
         <div class="form-group">
-            <label for="surname"><strong>Home URL:</strong></label>
-            <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}"/>
-            @error('surname')
+            <label for="homeUrl"><strong>Home URL*:</strong></label>
+            <input type="text" class="form-control @error('homeUrl') is-invalid @enderror" name="homeUrl" value="{{ old('homeUrl') }}"/>
+            @error('homeUrl')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -33,9 +33,9 @@
         </div>
 
         <div class="form-group">
-            <label for="surname"><strong>Search URL:</strong></label>
-            <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}"/>
-            @error('surname')
+            <label for="searchUrl"><strong>Search URL*:</strong></label>
+            <input type="text" class="form-control @error('searchUrl') is-invalid @enderror" name="searchUrl" value="{{ old('searchUrl') }}"/>
+            @error('searchUrl')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-group">
-            <label for="surname"><strong>Space Subtitute:</strong></label>
-            <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}"/>
-            @error('surname')
+            <label for="spaceSubstitute"><strong>Space Subtitute*:</strong></label>
+            <input type="text" class="form-control @error('spaceSubstitute') is-invalid @enderror" name="spaceSubstitute" value="{{ old('spaceSubstitute') }}"/>
+            @error('spaceSubstitute')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -56,9 +56,6 @@
         <a class="btn btn-primary float-left" href="/portals">Back</a>
         <button type="submit" class="btn btn-success float-right">Create portal</button>
     </form>
-
-    
-    
 </div>
 
 @endsection

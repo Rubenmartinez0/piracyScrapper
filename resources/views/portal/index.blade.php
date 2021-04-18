@@ -3,7 +3,7 @@
 <div class="row m-5">
     <div class="col-12">
         <h1>Portals list</h1>
-        <a class="btn btn-success mb-3" href="/portal/create">Create new portal</a>
+        <a class="btn btn-success mb-3 float-right" href="/portal/create">Create new portal</a>
         
         <div class="col-4" style="justify-content:center;"> 
           @if($message = Session::get('success'))
@@ -18,38 +18,39 @@
             </div>
           @endif
         </div>
-        
-        <table class="table table-hover table-responsive-lg">
-          <thead>
-              <tr>
-                <th class="font-weight-bold">Portal</th>
-                {{-- <th class="font-weight-bold">Home URL</th> --}}
-                <th class="font-weight-bold">Search URL</th>
-                <th class="font-weight-bold">Space subtitute</th>
-                <th class="font-weight-bold">Creation date</th>
-                <th class="font-weight-bold">Actions</th>
-              </tr>
-          </thead>
-          <tbody>
-              @foreach($portals as $portal)
+          <table class="table table-hover table-responsive-lg">
+            <thead>
                 <tr>
-                    <td><strong><a href={{ $portal->homeUrl }}>{{$portal->name}}</a></strong></td>
-                    {{-- <td><a href={{ $portal->homeUrl }}>{{$portal->homeUrl}}</a></td> --}}
-                    <td>{{$portal->searchUrl}}</td>
-                    <td>{{$portal->spaceSubstitute}}</td>
-                    <td>{{$portal->created_at}}</td>
-                    <td class="row">
-                        <a href="#" class="btn btn-warning mr-5">Edit</a>
-                        <form>
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-danger" type="submit" onclick="return confirm('Delete portal {{$portal->name}}?')" >Delete</button>
-                        </form>
-                    </td>
+                  <th class="font-weight-bold">Portal</th>
+                  {{-- <th class="font-weight-bold">Home URL</th> --}}
+                  <th class="font-weight-bold">Search URL</th>
+                  <th class="font-weight-bold">Space subtitute</th>
+                  <th class="font-weight-bold">Creation date</th>
+                  <th class="font-weight-bold">Actions</th>
                 </tr>
-              @endforeach
-            </tbody>
-        </table>
+            </thead>
+            <tbody>
+                @forelse($portals as $portal)
+                  <tr>
+                      <td><strong><a href={{ $portal->homeUrl }}>{{$portal->name}}</a></strong></td>
+                      {{-- <td><a href={{ $portal->homeUrl }}>{{$portal->homeUrl}}</a></td> --}}
+                      <td>{{$portal->searchUrl}}</td>
+                      <td>{{$portal->spaceSubstitute}}</td>
+                      <td>{{$portal->created_at}}</td>
+                      <td class="row">
+                          <a href="{{ route('portal.editView', $portal->id)}}" class="btn btn-warning mr-5">Edit</a>
+                          <form action="{{ route('portal.delete', $portal->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit" onclick="return confirm('Delete portal {{$portal->name}}?')" >Delete</button>
+                          </form>
+                      </td>
+                  </tr>
+                @empty
+                  <h2 class="text-danger">There are currently no portals</h2>
+                @endforelse
+              </tbody>
+          </table>
     
       <a class="btn btn-primary float-left" href="/">Back</a>
     <div>
